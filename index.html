@@ -234,6 +234,40 @@
             background: #e0e0e0;
         }
 
+        /* Estilos para la notificación emergente (Toast) */
+        .toast {
+            position: fixed;
+            bottom: -100px; /* Empieza fuera de la pantalla */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #00045e; /* Azul Reyfran */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 2000;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: bold;
+        }
+
+        .toast.show {
+            bottom: 50px; /* Sube a la posición visible */
+        }
+
+        .toast i {
+            font-size: 1.2rem;
+            color: #4BB543; /* Verde para el check */
+        }
+
+        /* Animación de pulso para el botón al enviar */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
         /* --- FOOTER --- */
         footer {
             background: #f1f1f1;
@@ -268,7 +302,7 @@
         <div class="logo-container">
             <!-- AQUÍ SE CARGA TU LOGO ADJUNTADO -->
             <img src="logo.png" alt="Reyfran Logo" class="logo-img">
-            <span class="brand-name">REYFRAN</span>
+            <span class="brand-name">REYFRAN FOOD & DRINK</span>
         </div>
         <nav>
             <ul>
@@ -281,7 +315,7 @@
 
     <!-- INICIO -->
     <section id="inicio">
-        <h1>REYFRAN</h1>
+        <h1>Reyfran</h1>
         <p>FOOD & DRINK • COCTELERÍA DE ALTA GAMA</p>
     </section>
 
@@ -337,7 +371,7 @@
             <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">Solicita tu Cotización</h2>
             <p style="text-align: center; margin-bottom: 40px; opacity: 0.8;">Déjanos tus datos y diseñaremos una propuesta exclusiva para tu evento.</p>
             
-            <form action="https://formsubmit.co/invreyfranpf@gmail.com" method="post">
+            <form id="form-contacto" action="https://formsubmit.co/ajax/invreyfranpf@gmail.com" method="post">
                 <input type="hidden" name="_subject" value="Nueva cotización de Reyfran">
                 <input type="hidden" name="_next" value="https://josmrls.github.io/Reyfran/">
                 <input type="hidden" name="_captcha" value="false">
@@ -362,6 +396,51 @@
             </form>
         </div>
     </section>
+
+    <!-- Ventanilla emergente (Toast) -->
+        <div id="toast" class="toast">
+            <i class="fas fa-check-circle"></i>
+            <span>¡Cotización enviada con éxito!</span>
+        </div>
+    
+    <script>
+        const form = document.getElementById('form-contacto');
+        const btnEnviar = document.querySelector('.btn-submit');
+        const toast = document.getElementById('toast');
+
+        form.addEventListener('submit', function(e){
+            e.preventDefault(); //Evita que la página se recargue
+
+            btnEnviar.innerText = "Enviando...";
+            btnEnviar.classList.add('loading');
+
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(Response => {
+                // Mostrar animación de éxito
+                toast.classList.add('show');
+                form.reset(); //Limpiar el formulario
+                // Quitar el aviso después de 4seg
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            })
+            .catch(error => {
+                alert("Hubo un error. Por favor intenta de nuevo.");
+            })
+            .finally(() => {
+                btnEnviar.innerText = "Enviar Solicitud";
+                btnEnviar.classList.remove('loading');
+            });
+        })
+    </script>
 
     <!-- FOOTER -->
     <footer>
