@@ -41,10 +41,7 @@
         }
 
         .menu-toggle {
-            display: none; /* Oculto en computadoras */
-            font-size: 1.8rem;
-            color: var(--azul-reyfran);
-            cursor: pointer;
+            display: none !important; /* Oculto en computadoras */
         }
 
         h1, h2, h3 {
@@ -318,7 +315,6 @@
             #inicio h1 {
                 font-size: 4.5rem !important; /* Título más pequeño en móvil */
                 line-height: 1;
-                margin-bottom: 0.5rem;
             }
             #inicio p {
                 font-size: 1.1rem !important;
@@ -330,31 +326,34 @@
 
             /* Menú de hamburguesa */
             .menu-toggle {
-                display: none;
+                display: none !important;
+                font-size: 2rem;
+                color: var(--azul-reyfran);
+                cursor: pointer;
+                z-index: 1001;
             }
+
             nav ul {
-                display: flex; /* Cambiar de none a flex para animación fluida de menú */
+                display: none; 
                 flex-direction: column;
                 position: absolute;
                 top: 70px;
                 left: 0;
                 width: 100%;
-                background-color: rgba(255,255,255,0.98);
-                text-align: center;
-
-                /* Efecto de cortina */
-                max-height: 0;
-                overflow: hidden;
-                opacity: 0;
-                transition: max-height 0.5s ease-in-out, opacity 0.3s ease;
-                pointer-events: none; /* Evitar clics accidentales cuando está cerrado */
+                background-color: white;
+                padding: 20px 0;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                z-index: 1000;
             }
             nav ul.active {
-                max-height: 400px; /* Altura suficiente para mostrar los links */
-                opacity: 1;
-                pointer-events: auto;
-                padding: 20px 0;
+                display: flex !important;
+                animation: slideDown 0.3s ease-out;
             }
+            @keyframes slideDown {
+                from {opacity: 0; transform: translateY(-10px);}
+                to {opacity: 1; transform: translateY(0);}
+            }
+
             nav ul li {
                 margin: 15px 0;
             }
