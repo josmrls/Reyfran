@@ -119,7 +119,7 @@
         }
         .allura-regular{
             font-family: 'Allura', cursive;
-            font-weight: 400;
+            font-weight: 500;
             font-style: normal;
         }
         #inicio h1 {
@@ -313,8 +313,8 @@
         @media (max-width: 768px) {
             /* Ajustes generales de texto */
             #inicio h1 {
-                font-size: 4.5rem !important; /* Título más pequeño en móvil */
-                line-height: 1;
+                font-size: 7.5rem !important; /* Título más pequeño en móvil */
+                line-height: 1.1;
             }
             #inicio p {
                 font-size: 1.1rem !important;
@@ -326,7 +326,7 @@
 
             /* Menú de hamburguesa */
             .menu-toggle {
-                display: none !important;
+                display: block !important;
                 font-size: 2rem;
                 color: var(--azul-reyfran);
                 cursor: pointer;
@@ -334,20 +334,32 @@
             }
 
             nav ul {
-                display: none; 
+                display: flex; 
                 flex-direction: column;
                 position: absolute;
                 top: 70px;
                 left: 0;
                 width: 100%;
                 background-color: white;
-                padding: 20px 0;
+                text-align: center;
                 box-shadow: 0 10px 15px rgba(0,0,0,0.1);
                 z-index: 1000;
+
+                /* ANIMACION DE CIERRE */
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+                pointer-events: none;
+                transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1),
+                            opacity 0.3s ease,
+                            padding 0.4s ease;
             }
+
             nav ul.active {
-                display: flex !important;
-                animation: slideDown 0.3s ease-out;
+                max-height: 350px;
+                opacity: 1;
+                pointer-events: auto;
+                padding: 25px 0;
             }
             @keyframes slideDown {
                 from {opacity: 0; transform: translateY(-10px);}
@@ -356,6 +368,14 @@
 
             nav ul li {
                 margin: 15px 0;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: 0.3s ease;
+            }
+            nav ul.active li {
+                opacity: 1;
+                transform: translateY(0);
+                transition-delay: 0.2s;
             }
 
             /* Ajuste de Grids (Columnas a una sola fila) */
@@ -541,10 +561,11 @@
     <script>
         const menuToggle = document.getElementById('mobile-menu');
         const navList = document.getElementById('nav-list');
-        // Abrir y cerrar menú al hacer clic en las barritas
-        menuToggle.addEventListener('click', () => {
+
+        menuToggle.addEventListener('click', function() {
             navList.classList.toggle('active');
         });
+
         // Cerrar automáticamente al hacer clic en una opción (anclas)
         function closeMenu() {
             navList.classList.remove('active');
