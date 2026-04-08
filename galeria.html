@@ -12,7 +12,7 @@
         :root { --azul: #00045e; --blanco: #ffffff; --gris: #f8f9fa;}
         * { margin: 0; padding: 0; box-sizing: border-box;}
         body {font-family: 'Montserrat', sans-serif;
-        background-color: var(--gris); color: var(--azul);}
+        background-color: var(--gris); color: var(--azul); overflow-x: hidden;}
 
         /* HEADER igual que el index */
         header {
@@ -96,53 +96,32 @@
             font-size: 1.5rem;
             margin-bottom: 5px;}
 
-        /* LIGHTBOX (Ventanilla emergente) */
+        /* LIGHTBOX CORREGIDO */
         .lightbox {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 4, 94, 0.7);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: 0.4s;
-        }
-        .portafolio-item:hover .overlay {opacity: 1;}
-        .overlay h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        /* LIGHTBOX (Ventana para ver grande) */
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
-            padding: 20px;
+            z-index: 9999;
         }
         .lightbox.active {display: flex;}
+        .lightbox-content {max-width: 90%; max-height: 80vh; position: relative;}
         .lightbox img, .lightbox video {
-            max-width: 90%;
+            width: 100%;
+            height: auto;
             max-height: 80vh;
-            border-radius: 5px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
-        .close-lightbox {
+        .close-btn {
             position: absolute;
-            top: 30px;
-            right: 30px;
+            top: -40px;
+            right: 0px;
             color: white;
             font-size: 2rem;
             cursor: pointer;
@@ -180,9 +159,10 @@
         </a>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="galeria.html" style="border-bottom: 2px solid var(--azul);">Galería</a></li>
-                <li><a href="index.html#contacto">Cotizar</a></li>
+                <li><a href="index.html" onclick="closeMenu()">Inicio</a></li>
+                <li><a href="galeria.html" style="border-bottom: 2px solid var(--azul);" onclick="closeMenu()">Galería</a></li>
+                <li><a href="#nosotros" onclick="closeMenu()">Sobre Nosotros</a></li>
+                <li><a href="index.html#contacto" onclick="closeMenu()">Cotizar</a></li>
             </ul>
         </nav>
     </header>
@@ -194,7 +174,7 @@
 
     <div class="portafolio-grid">
         <!-- Ejemplo de Imagenes -->
-         <div class="portafolio-item" data-aos="fade-up" onclick="openLightbox('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1000&q=80', 'img')">
+         <div class="portafolio-item" data-aos="fade-up" onclick="openMedia('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1000&q=80', 'img')">
             <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80" alt="Cocktail Reyfran">
             <div class="overlay">
                 <h3>Coctelería de autor</h3>
@@ -203,8 +183,54 @@
          </div>
 
         <!-- Ejemplo de Video -->
-         <div></div>
-
+         <div class="portafolio-item" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox('carmesi_fizz.mp4', 'video')">
+            <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&q=80" alt="Video Evento">
+            <div class="overplay">
+                <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                <h3>Servicio en Vivo</h3>
+                <p>Reproducir Video</p>
+            </div>
+         </div>
+         <!-- Seguir agregando bloques para fotos -->
     </div>
+
+    <div class="lightbox" id="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <div id="lightbox-content"></div>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=100076418970952" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/invreyfranpf" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+        <div class="footer-info">
+            <p><i class="fas fa-envelope"></i> invreyfranpf@gmail.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Punto Fijo | Edo. Falcón, Venezuela</p>
+        </div>
+        <p style="font-size: 0.7rem; color: #999;">&copy; 2024 Reyfran Food & Drink. Todos los derechos reservados.</p>
+    </footer>
+
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({duration: 1000});
+
+        const lightbox = document.getElementById('lightbox');
+        const content = document.getElementById('lightbox-content');
+
+        function openLightbox(url, type) {
+            content.innerHTML = '';
+            if(type == 'img') {
+                content.innerHTML = '<img src="${url}">';
+            } else {
+                content.innerHTML = '<video src="${url}"> controls autoplay></video>';
+            }
+            lightbox.classList.add('active');
+        }
+        function closeLightbox () {
+            lightbox.classList.remove('active');
+            content.innerHTML = '';
+        }
+    </script>
 </body>
 </html>
