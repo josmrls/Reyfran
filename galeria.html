@@ -49,31 +49,30 @@
             font-size: 0.8rem;
             text-transform: uppercase;}
 
-        /* SECCION PORTAFOLIO */
-        .portafolio-header {
-            padding: 80px 10% 40px;
-            text-align: center;
-            background: var(--azul);
-            color: white;}
-        .portafolio-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 10px;}
+        /* GRID PORTAFOLIO */
         .portafolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             padding: 40px 10%;
         }
+        /* CAJA 4:3 FIJO */
         .portafolio-item {
             position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3; /* Proporción 4:3 */
             overflow: hidden;
             border-radius: 12px;
             background: white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             cursor: pointer;
         }
-        .portafolio-item:hover img {transform:  scale(1.1);}
+        .portafolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
         /* Overlay con información */
         .overlay {
@@ -90,11 +89,9 @@
             align-items: center;
             opacity: 0;
             transition: 0.4s;}
+
+        .portafolio-item:hover img {transform: scale(1.1);}            
         .portafolio-item:hover .overlay {opacity: 1;}
-        .overlay h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 5px;}
 
         /* LIGHTBOX CORREGIDO */
         .lightbox {
@@ -109,22 +106,27 @@
             align-items: center;
             z-index: 9999;
         }
-        .lightbox.active {display: flex;}
-        .lightbox-content {max-width: 90%; max-height: 80vh; position: relative;}
-        .lightbox img, .lightbox video {
-            width: 100%;
-            height: auto;
+        .lightbox-content {
+            max-width: 90%;
             max-height: 80vh;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+        .lightbox-content img, .lightbox-content video {
+            width: 100%;
+            max-height: 85vh;
+            border-radius: 4px;
+            object-fit: contain;
         }
         .close-btn {
             position: absolute;
-            top: -40px;
-            right: 0px;
+            top: -50px;
+            right: 0;
             color: white;
-            font-size: 2rem;
+            font-size: 3rem;
             cursor: pointer;
+            line-height: 1;
         }
 
         /* FOOTER */ 
@@ -145,9 +147,11 @@
                 grid-template-columns: 1fr;
                 padding: 20px 5%;
             }
+            .portafolio-header {padding: 40px 5%;}
             .portafolio-header h1 {
                 font-size: 2.2rem;
             }
+            .lightbox-content {width: 95%;}
         }
     </style>
 </head>
@@ -168,7 +172,7 @@
     </header>
 
     <section class="portafolio-header">
-        <h1 data-aos="fade-down">Nuestras Experiencias</h1>
+        <h1 data-aos="fade-down">Nuestra Galería</h1>
         <p data-aos="fade-up">Visualiza el arte de la coctelería y el catering premium de Reyfran</p>
     </section>
 
@@ -177,7 +181,8 @@
          <div class="portafolio-item" data-aos="fade-up" onclick="openMedia('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1000&q=80', 'img')">
             <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=600&q=80" alt="Cocktail Reyfran">
             <div class="overlay">
-                <h3>Ver Imagen</h3>
+                <i class="fas fa-search-plus" style="font-size: 2rem;"></i>
+                <p style="margin-top: 10px;">Ver Foto</p>
             </div>
          </div>
 
@@ -185,7 +190,7 @@
          <div class="portafolio-item" data-aos="fade-up" data-aos-delay="100" onclick="openMedia('carmesi_fizz.mp4', 'video')">
             <img src="port_carmesi_fizz.PNG" alt="Video Mocktail">
             <div class="overplay">
-                <i class="fas fa-play-circle" style="font-size: 2rem;"></i>
+                <i class="fas fa-play-circle" style="font-size: 3.5rem;"></i>
                 <h3 style="margin-top: 10px;">Reproducir</h3>
             </div>
          </div>
@@ -193,10 +198,10 @@
     </div>
     
     <!-- ESTRUCTURA DE LIGHTBOX -->
-    <div class="lightbox" id="lightbox" onclick="closeMedia()">
-        <div class="lightbox-content" onclick="event.stopImmediatePropagation()">
+    <div id="lightbox" onclick="closeMedia()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeMedia()">&times;</span>
-            <div id="media-container"></div>
+            <div id="media-box"></div>
         </div>
     </div>
 
@@ -205,23 +210,36 @@
         AOS.init();
 
         const lightbox = document.getElementById('lightbox');
-        const container = document.getElementById('media-container');
+        const mediaBox = document.getElementById('media-box');
 
         function openMedia(url, type) {
-            content.innerHTML = ''; // Limpiar anterior
+            mediaBox.innerHTML = ''; // Limpiar anterior
             if(type == 'img') {
-                container.innerHTML = `<img src="${url}">`;
+                const img = document.createElement('img');
+                img.src = url;
+                mediaBox.appendChild(img);
             } else {
-                container.innerHTML = `<video src="${url}"> controls autoplay></video>`;
+                const video = document.createElement('video');
+                video.src = url;
+                video.controls = true;
+                video.autoplay = true;
+                video.muted = false;
+                video.style.width = "100%";
+                mediaBox.appendChild(video);
             }
-            lightbox.classList.add('active');
+
+            lightbox.style.display = 'flex';
             document.body.style.overflow = 'hidden'; // Bloquea scroll al ver la foto
         }
+
         function closeMedia () {
-            lightbox.classList.remove('active');
-            container.innerHTML = ''; // Detener video si estaba sonando
+            lightbox.style.display = 'none';
+            mediaBox.innerHTML = ''; // Detener video si estaba sonando
             document.body.style.overflow = 'auto'; // Devolver scroll
         }
+        document.addEventListener('keydown', (e) => {
+            if(e.key === "Escape") closeMedia();
+        });
     </script>
 
     <footer>
