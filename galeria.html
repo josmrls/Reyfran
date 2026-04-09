@@ -29,10 +29,10 @@
         .portafolio-header { padding: 60px 10%; text-align: center; background: var(--azul); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .portafolio-header h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; }
 
-        /* GRID PORTAFOLIO DINÁMICO */
+        /* GRID PORTAFOLIO */
         #portafolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
             padding: 50px 10%;
             justify-content: center; 
@@ -41,7 +41,7 @@
 
         .portafolio-item {
             position: relative; width: 100%; aspect-ratio: 4 / 3; 
-            overflow: hidden; border-radius: 12px; background: #eee;
+            overflow: hidden; border-radius: 12px; background: white;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer;
         }
         .portafolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s; }
@@ -109,11 +109,10 @@
         <p data-aos="fade-up">Visualiza el arte de la coctelería premium de Reyfran</p>
     </section>
 
-    <!-- AQUÍ SE CARGARÁ EL CONTENIDO AUTOMÁTICAMENTE -->
     <div id="portafolio-grid"></div>
     
     <div id="lightbox" onclick="closeLightbox()">
-        <span class="close-btn">&times;</span>
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
         <div class="lightbox-content" onclick="event.stopPropagation()">
             <div id="media-container" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;"></div>
         </div>
@@ -133,12 +132,12 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // 1. FUNCIONES GLOBALES (Deben estar afuera para que el onclick las encuentre)
+        // Variables globales para el Lightbox
         const lightbox = document.getElementById('lightbox');
         const mediaContainer = document.getElementById('media-container');
 
+        // Función para abrir la vista ampliada
         function openLightbox(url, type) {
-            console.log("Abriendo:", url, type); // Diagnóstico
             mediaContainer.innerHTML = '';
             if (type === 'img') {
                 mediaContainer.innerHTML = `<img src="${url}" alt="Vista ampliada">`;
@@ -149,32 +148,22 @@
             document.body.style.overflow = 'hidden';
         }
 
+        // Función para cerrar la vista ampliada
         function closeLightbox() {
             lightbox.classList.remove('active');
             mediaContainer.innerHTML = ''; 
             document.body.style.overflow = 'auto'; 
         }
 
-        // 2. CARGA DINÁMICA
+        // Cargar contenido desde el archivo JSON
         async function cargarPortafolio() {
             const grid = document.getElementById('portafolio-grid');
             try {
-                // Añadimos un prevent cache para asegurar que cargue la versión nueva del JSON
-                const respuesta = await fetch('multimedia.json?v=' + Date.now());
+                // Fetch del archivo JSON
+                const respuesta = await fetch('multimedia.json');
+                if (!respuesta.ok) throw new Error("Error al cargar JSON");
                 
-                if (!respuesta.ok) {
-                    throw new Error("No se pudo encontrar el archivo multimedia.json");
-                }
-
                 const datos = await respuesta.json();
-                console.log("Datos cargados con éxito:", datos);
-
-                if (datos.length === 0) {
-                    grid.innerHTML = "<p>No hay contenido disponible por el momento.</p>";
-                    return;
-                }
-
-                grid.innerHTML = ''; // Limpiar antes de cargar
 
                 datos.forEach((item, index) => {
                     const div = document.createElement('div');
@@ -182,11 +171,11 @@
                     div.setAttribute('data-aos', 'fade-up');
                     div.setAttribute('data-aos-delay', (index % 3) * 100);
                     
-                    // Usamos un listener de JS en lugar de onclick directo para evitar fallos
+                    // Al hacer click, abre el lightbox
                     div.onclick = () => openLightbox(item.url, item.tipo);
 
                     div.innerHTML = `
-                        <img src="${item.miniatura}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/400x300?text=Error+al+cargar+imagen'">
+                        <img src="${item.miniatura}" alt="Multimedia" onerror="this.src='https://via.placeholder.com/400x300?text=Error+de+Carga'">
                         <div class="overlay">
                             <i class="fas ${item.tipo === 'img' ? 'fa-search-plus' : 'fa-play-circle'}" style="font-size: 2.5rem;"></i>
                         </div>
@@ -194,22 +183,20 @@
                     grid.appendChild(div);
                 });
 
-                // Iniciar animaciones después de cargar
-                setTimeout(() => {
-                    AOS.init({ duration: 1200, once: true });
-                }, 100);
+                // Inicializar animaciones AOS
+                AOS.init({ duration: 1200, once: true });
 
             } catch (error) {
-                console.error("ERROR CRÍTICO:", error);
-                grid.innerHTML = `<p style="color:red; text-align:center;">Error al cargar la galería. Revisa la consola (F12).</p>`;
+                console.error("Error cargando galería:", error);
+                grid.innerHTML = `<p style="text-align:center; color:red; padding:50px;">Error al cargar la galería. Revisa que multimedia.json esté en la carpeta raíz.</p>`;
             }
         }
 
-        // 3. INICIALIZACIÓN
+        // Iniciar todo cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', () => {
             cargarPortafolio();
 
-            // Menú móvil
+            // Lógica del Menú Móvil
             const menuToggle = document.getElementById('mobile-menu');
             const navList = document.getElementById('nav-list');
             if (menuToggle) {
@@ -219,9 +206,9 @@
             }
         });
 
-        // Cerrar con Escape
-        document.addEventListener('keydown', (e) => { 
-            if(e.key === "Escape") closeLightbox(); 
+        // Cerrar con tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if(e.key === "Escape") closeLightbox();
         });
     </script>
 </body>
