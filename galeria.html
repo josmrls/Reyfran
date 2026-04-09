@@ -34,11 +34,12 @@
             text-decoration: none;
             color: var(--azul);}
         .logo-img {
-            height: 70px; /* Ajustado para que no sea excesivo */
+            height: 90px; /* Ajustado para que no sea excesivo */
+            width: auto;
             margin-right: 10px;}
         .brand-name {
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             letter-spacing: 1px;}
         
         /* Botón hamburguesa oculto en PC */
@@ -57,7 +58,7 @@
             text-decoration: none;
             color: var(--azul);
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-transform: uppercase;}
         
         /* PORTAFOLIO HEADER */
@@ -112,7 +113,7 @@
             background: rgba(0, 4, 94, 0.4);
             color: white;
             display: flex; justify-content: center; align-items: center;
-            opacity: 0; transition: 0.4s;
+            opacity: 0; transition: 1.2s;
             pointer-events: none;}
           
         .portafolio-item:hover .overlay {opacity: 1;}
@@ -220,8 +221,8 @@
             </div>
          </div>
 
-         <div class="portafolio-item" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox('carmesi_fizz.mp4', 'video')">
-            <img src="port_carmesi_fizz.PNG" alt="Video Mocktail">
+         <div class="portafolio-item" data-aos="fade-up" data-aos-delay="100" onclick="openLightbox('/PORTAFOLIO_VIDEOS/carmesi_fizz.mp4', 'video')">
+            <img src="/PORTAFOLIO_PORTADAS/port_carmesi_fizz.PNG" alt="Video Mocktail">
             <div class="overlay">
                 <i class="fas fa-play-circle" style="font-size: 2.5rem;"></i>
             </div>
