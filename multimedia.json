@@ -512,66 +512,71 @@
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/6F7868C5-B3C4-4983-8F3C-2A90BF0202DE.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/6F7868C5-B3C4-4983-8F3C-2A90BF0202DE.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/6F7868C5-B3C4-4983-8F3C-2A90BF0202DE.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/3808dc366b9d4936a3caf0e89fac2017.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/3808dc366b9d4936a3caf0e89fac2017.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/3808dc366b9d4936a3caf0e89fac2017.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/6701FDCD-59B7-4ACA-A22C-8FEBBFB1974C.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/6701FDCD-59B7-4ACA-A22C-8FEBBFB1974C.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/6701FDCD-59B7-4ACA-A22C-8FEBBFB1974C.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/813399be73ad45d2a29f82dbc81e9496.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/813399be73ad45d2a29f82dbc81e9496.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/813399be73ad45d2a29f82dbc81e9496.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/AF9EE722-7828-4A6E-A2D0-0F43ACF91025.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/AF9EE722-7828-4A6E-A2D0-0F43ACF91025.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/AF9EE722-7828-4A6E-A2D0-0F43ACF91025.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/b0fb32d7a87442e19bf232b365dbb6ba.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/b0fb32d7a87442e19bf232b365dbb6ba.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/b0fb32d7a87442e19bf232b365dbb6ba.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/C5F4F0C4-2834-4CF1-9DA4-00BB1054CBDD.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/C5F4F0C4-2834-4CF1-9DA4-00BB1054CBDD.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/C5F4F0C4-2834-4CF1-9DA4-00BB1054CBDD.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/d4551ac4f8bd4848bee98dee94d2468f.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/d4551ac4f8bd4848bee98dee94d2468f.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/d4551ac4f8bd4848bee98dee94d2468f.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/ED1CFA93-7ABC-4304-AF39-72E20F916942.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/ED1CFA93-7ABC-4304-AF39-72E20F916942.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/ED1CFA93-7ABC-4304-AF39-72E20F916942.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/F4AB70E0-3F74-477B-AEBB-30F23038683F.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/F4AB70E0-3F74-477B-AEBB-30F23038683F.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/F4AB70E0-3F74-477B-AEBB-30F23038683F.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/IMG_0137.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/IMG_0137.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/IMG_0137.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/IMG_0420.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/IMG_0420.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/IMG_0420.PNG"
     },
     {
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/IMG_0928.MP4",
-        "miniatura": "PORTAFOLIO_VIDEOS/IMG_0928.MP4"
+        "miniatura": "PORTAFOLIO_PORTADAS/IMG_0928.PNG"
+    },
+    {
+        "tipo": "video",
+        "url": "PORTAFOLIO_VIDEOS/IMG_2737.mp4",
+        "miniatura": "PORTAFOLIO_PORTADAS/IMG_2737.PNG"
     }
 ]
