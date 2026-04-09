@@ -573,45 +573,5 @@
         "tipo": "video",
         "url": "/PORTAFOLIO_VIDEOS/IMG_0928.MP4",
         "miniatura": "PORTAFOLIO_VIDEOS/IMG_0928.MP4"
-    },
-    {
-        "tipo": "video",
-        "url": "/",
-        "miniatura": ""
-    },
-    {
-        "tipo": "video",
-        "url": "/",
-        "miniatura": ""
-    },
-    {
-        "tipo": "video",
-        "url": "/",
-        "miniatura": ""
-    },
-    {
-        "tipo": "video",
-        "url": "/",
-        "miniatura": ""
-    },
-    {
-        "tipo": "video",
-        "url": "/",
-        "miniatura": ""
-    },
-    {
-        "tipo": "video",
-        "url": "/",
-        "miniatura": ""
-    },
-    {
-        "tipo": "video",
-        "url": "/",
-        "miniatura": ""
-    },
-    {
-        "tipo": "video",
-        "url": "/",
-        "miniatura": ""
-    },
+    }
 ]
