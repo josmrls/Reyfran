@@ -133,48 +133,14 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // CARGAR CONTENIDO DESDE EL JSON
-        async function cargarPortafolio() {
-            const grid = document.getElementById('portafolio-grid');
-            try {
-                const respuesta = await fetch('multimedia.json');
-                const datos = await respuesta.json();
-
-                datos.forEach((item, index) => {
-                    const itemHTML = `
-                        <div class="portafolio-item" data-aos="fade-up" data-aos-delay="${(index % 3) * 100}" onclick="openLightbox('${item.url}', '${item.tipo}')">
-                            <img src="${item.miniatura}" alt="${item.titulo}">
-                            <div class="overlay">
-                                <i class="fas ${item.tipo === 'img' ? 'fa-search-plus' : 'fa-play-circle'}" style="font-size: 2.5rem;"></i>
-                            </div>
-                        </div>
-                    `;
-                    grid.innerHTML += itemHTML;
-                });
-
-                // Reiniciar AOS para que detecte los nuevos elementos cargados
-                AOS.init({ duration: 800, once: true });
-
-            } catch (error) {
-                console.error("Error cargando el archivo JSON:", error);
-            }
-        }
-
-        // Ejecutar carga al iniciar
-        cargarPortafolio();
-
-        // Control del Menú Móvil
-        const menuToggle = document.getElementById('mobile-menu');
-        const navList = document.getElementById('nav-list');
-        menuToggle.addEventListener('click', () => { navList.classList.toggle('active'); });
-
-        // Control del Lightbox
+        // 1. FUNCIONES GLOBALES (Deben estar afuera para que el onclick las encuentre)
         const lightbox = document.getElementById('lightbox');
         const mediaContainer = document.getElementById('media-container');
 
-        function openLightbox (url, type) {
+        function openLightbox(url, type) {
+            console.log("Abriendo:", url, type); // Diagnóstico
             mediaContainer.innerHTML = '';
-            if (type === 'img'){
+            if (type === 'img') {
                 mediaContainer.innerHTML = `<img src="${url}" alt="Vista ampliada">`;
             } else {
                 mediaContainer.innerHTML = `<video src="${url}" controls autoplay></video>`;
@@ -183,13 +149,80 @@
             document.body.style.overflow = 'hidden';
         }
 
-        function closeLightbox () {
+        function closeLightbox() {
             lightbox.classList.remove('active');
             mediaContainer.innerHTML = ''; 
             document.body.style.overflow = 'auto'; 
         }
 
-        document.addEventListener('keydown', (e) => { if(e.key === "Escape") closeLightbox(); });
+        // 2. CARGA DINÁMICA
+        async function cargarPortafolio() {
+            const grid = document.getElementById('portafolio-grid');
+            try {
+                // Añadimos un prevent cache para asegurar que cargue la versión nueva del JSON
+                const respuesta = await fetch('multimedia.json?v=' + Date.now());
+                
+                if (!respuesta.ok) {
+                    throw new Error("No se pudo encontrar el archivo multimedia.json");
+                }
+
+                const datos = await respuesta.json();
+                console.log("Datos cargados con éxito:", datos);
+
+                if (datos.length === 0) {
+                    grid.innerHTML = "<p>No hay contenido disponible por el momento.</p>";
+                    return;
+                }
+
+                grid.innerHTML = ''; // Limpiar antes de cargar
+
+                datos.forEach((item, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'portafolio-item';
+                    div.setAttribute('data-aos', 'fade-up');
+                    div.setAttribute('data-aos-delay', (index % 3) * 100);
+                    
+                    // Usamos un listener de JS en lugar de onclick directo para evitar fallos
+                    div.onclick = () => openLightbox(item.url, item.tipo);
+
+                    div.innerHTML = `
+                        <img src="${item.miniatura}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/400x300?text=Error+al+cargar+imagen'">
+                        <div class="overlay">
+                            <i class="fas ${item.tipo === 'img' ? 'fa-search-plus' : 'fa-play-circle'}" style="font-size: 2.5rem;"></i>
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                });
+
+                // Iniciar animaciones después de cargar
+                setTimeout(() => {
+                    AOS.init({ duration: 1200, once: true });
+                }, 100);
+
+            } catch (error) {
+                console.error("ERROR CRÍTICO:", error);
+                grid.innerHTML = `<p style="color:red; text-align:center;">Error al cargar la galería. Revisa la consola (F12).</p>`;
+            }
+        }
+
+        // 3. INICIALIZACIÓN
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarPortafolio();
+
+            // Menú móvil
+            const menuToggle = document.getElementById('mobile-menu');
+            const navList = document.getElementById('nav-list');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', () => {
+                    navList.classList.toggle('active');
+                });
+            }
+        });
+
+        // Cerrar con Escape
+        document.addEventListener('keydown', (e) => { 
+            if(e.key === "Escape") closeLightbox(); 
+        });
     </script>
 </body>
 </html>
