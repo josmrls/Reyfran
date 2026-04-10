@@ -13,6 +13,7 @@
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
 
     <style>
         :root {
@@ -35,14 +36,11 @@
             color: var(--azul-oscuro);
             line-height: 1.6;
             animation: fadeInPage 1.5s ease-in-out;
+            overflow-x: hidden;
         }
         @keyframes fadeInPage {
             from {opacity: 0;}
             to {opacity: 1;}
-        }
-
-        .menu-toggle {
-            display: none !important; /* Oculto en computadoras */
         }
 
         h1, h2, h3 {
@@ -101,6 +99,10 @@
 
         nav ul li a:hover {
             color: #555;
+        }
+
+        .menu-toggle {
+            display: none !important; /* Oculto en computadoras */
         }
 
         /* --- SECCIÓN INICIO (HERO) --- */
@@ -202,38 +204,89 @@
             margin: 0 auto;
         }
 
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-row-align {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: stretch;
+        }
+
         .form-group {
             margin-bottom: 20px;
+            text-align: left;
         }
 
-        .form-group input, .form-group textarea {
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 15px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: var(--blanco);
+            padding: 15px 18px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-family: 'Monserrat', sans-serif;
+            font-size: 0.95rem;
             outline: none;
+            transition: 0.3s;
+            display: block;
+        }
+        .form-group textarea {
+            height: 100%;
+            min-height: 120px;
+            resize: none;
         }
 
-        .form-group input::placeholder, .form-group textarea::placeholder {
-            color: #ccc;
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: white;
         }
 
+        .form-row-final {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: stretch;
+            margin-bottom: 25px;
+        }
+        .form-row-final .form-group input, .form-row-final .form-group textarea {
+            flex-grow: 1;
+            min-height: 120px;
+        }
+
+        /* Detector de selector de países */
+        .iti {width: 100%;}
+        .iti__country-list {color: #333;}
         .btn-submit {
             background: var(--blanco);
             color: var(--azul-reyfran);
-            padding: 15px 40px;
+            padding: 18px;
             border: none;
             cursor: pointer;
             font-weight: bold;
+            font-size: 1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             width: 100%;
-            transition: 0.3s;
+            transition: 0.3s ease;
+            border-radius: 4px;
+            display: block;
         }
-
         .btn-submit:hover {
             background: #e0e0e0;
+            transform: scale(1.02);
         }
 
         /* Estilos para la notificación emergente (Toast) */
@@ -242,8 +295,8 @@
             bottom: -100px; /* Empieza fuera de la pantalla */
             left: 50%;
             transform: translateX(-50%);
-            background-color: #00045e; /* Azul Reyfran */
-            color: white;
+            background-color: white;
+            color: var(--azul-reyfran);
             padding: 15px 30px;
             border-radius: 50px;
             display: flex;
@@ -254,22 +307,13 @@
             transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             font-weight: bold;
         }
-
         .toast.show {
             bottom: 50px; /* Sube a la posición visible */
         }
-
         .toast i {
             font-size: 1.2rem;
             color: #4BB543; /* Verde para el check */
         }
-
-        /* Animación de pulso para el botón al enviar */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
         /* --- FOOTER --- */
         footer {
             background: #f1f1f1;
@@ -291,19 +335,6 @@
 
         /* RESPONSIVO */
         @media (max-width: 768px) {
-            /* Ajustes generales de texto */
-            #inicio h1 {
-                font-size: 7.5rem !important; /* Título más pequeño en móvil */
-                line-height: 1.1;
-            }
-            #inicio p {
-                font-size: 1.1rem !important;
-                letter-spacing: 1px;
-            }
-            h2 {
-                font-size: 1.8rem !important;
-            }
-
             /* Menú de hamburguesa */
             .menu-toggle {
                 display: block !important;
@@ -312,7 +343,6 @@
                 cursor: pointer;
                 z-index: 1001;
             }
-
             nav ul {
                 display: flex; 
                 flex-direction: column;
@@ -324,7 +354,6 @@
                 text-align: center;
                 box-shadow: 0 10px 15px rgba(0,0,0,0.1);
                 z-index: 1000;
-
                 /* ANIMACION DE CIERRE */
                 max-height: 0;
                 opacity: 0;
@@ -333,19 +362,17 @@
                 transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1),
                             opacity 0.3s ease,
                             padding 0.4s ease;
+            }   
+            @keyframes slideDown {
+                from {opacity: 0; transform: translateY(-10px);}
+                to {opacity: 1; transform: translateY(0);}
             }
-
             nav ul.active {
                 max-height: 350px;
                 opacity: 1;
                 pointer-events: auto;
                 padding: 25px 0;
             }
-            @keyframes slideDown {
-                from {opacity: 0; transform: translateY(-10px);}
-                to {opacity: 1; transform: translateY(0);}
-            }
-
             nav ul li {
                 margin: 15px 0;
                 opacity: 0;
@@ -357,27 +384,12 @@
                 transform: translateY(0);
                 transition-delay: 0.2s;
             }
-
             /* Ajuste de Grids (Columnas a una sola fila) */
-            .grid-nosotros, .servicios-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .section-padding {
-                padding: 60px 5%; /* Menos margen lateral en móvil */
-            }
-            .mision-vision {
-                padding: 20px;
-            }
-
-            /* Ajuste de imágenes */
-            .grid-nosotros img {
-                box-shadow: 10px 10px 0px var(--azul-reyfran) !important; /* Sombra más pequeña */
-            }
-            .galeria {
-                grid-template-columns: 1fr 1fr !important; /* Dos fotos por fila en móvil */
-            }
+            .grid-nosotros {grid-template-columns: 1fr;}
+            .form-row {grid-template-columns: 1fr;}
+            .form-row-align {grid-template-columns: 1fr;}
+            .section-padding {padding: 60px 5%;}
         }
-
     </style>
 </head>
 <body>
@@ -422,8 +434,8 @@
                     <p>Consolidarnos como los líderes en servicios de barra y catering, siendo reconocidos por nuestra elegancia, sabor y la impecable ejecución de Reyfran.</p>
                 </div>
             </div>
-            <div>
-                <img src="img_bartender.PNG" alt="Bartender Reyfran" style="width:100%; box-shadow: 20px 20px 0px var(--azul-reyfran);">
+            <div data-aos="zoom-in">
+                <img src="img_bartender.PNG" alt="Bartender Reyfran" style="width:100%; border-radius: 10px; box-shadow: 20px 20px 0px var(--azul-reyfran);">
             </div>
         </div>
 
@@ -462,19 +474,43 @@
                     <label>Nombre y Apellido</label>
                     <input type="text" name="Nombre" placeholder="Ej. Francisco Pérez" required>
                 </div>
-                <div class="form-group">
-                    <label>Correo Electrónico</label>
-                    <input type="email" name="email" placeholder="contacto@ejemplo.com" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="phone" name="phone_full" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha del Evento</label>
+                        <input type="date" name="Fecha" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tipo de Servicio</label>
+                        <select name="Servicio" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="Servicio Completo">Coctelería Completo (Barra, Bartender e Insumos)</option>
+                            <option value="Bartender e Insumos">Coctelería (Bartender e Insumos)</option>
+                            <option value="Barra y Bartender">Coctelería (Barra móvil y Bartender)</option>
+                            <option value="Barismo">Barismo (Barra móvil y Barista)</option>
+                            <option value="Milkshakes">Milkshakes (Fiesta Infantil)</option>
+                        </select>
                 </div>
                 <div class="form-group">
-                    <label>Teléfono</label>
-                    <input type="tel" name="Telefono" placeholder="+00 000 000 0000">
+                    <label>Cantidad de Personas</label>
+                    <input type="number" name="Invitados" placeholder="Ej. 50" required>
+                </div>
+                <div class="form-group-align">
+                    <div class="form-group">
+                        <label>Zona / Ubicación del Evento</label>
+                        <input type="text" name="Ubicacion" placeholder="Escribe el lugar o zona..." required>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label>Detalles del Evento (Fecha, cantidad de invitados, lugar)</label>
-                    <textarea name="Mensaje" rows="4" placeholder="Cuéntanos más para darte un presupuesto exacto..."></textarea>
+                    <label>Detalles Adicionales</label>
+                    <textarea name="Mensaje" placeholder="Cuéntanos más detalles..."></textarea>
                 </div>
-                <button type="submit" class="btn-submit">Enviar Solicitud</button>
+                <button type="submit" id="btn-enviar" class="btn-submit">Enviar Solicitud</button>
             </form>
         </div>
     </section>
@@ -485,66 +521,65 @@
             <span>¡Cotización enviada con éxito!</span>
         </div>
     
-    <script>
-        const form = document.getElementById('form-contacto');
-        const btnEnviar = document.querySelector('.btn-submit');
-        const toast = document.getElementById('toast');
-
-        form.addEventListener('submit', function(e){
-            e.preventDefault(); //Evita que la página se recargue
-
-            btnEnviar.innerText = "Enviando...";
-            btnEnviar.classList.add('loading');
-
-            const formData = new FormData(this);
-
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(Response => {
-                // Mostrar animación de éxito
-                toast.classList.add('show');
-                form.reset(); //Limpiar el formulario
-                // Quitar el aviso después de 4seg
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 4000);
-            })
-            .catch(error => {
-                alert("Hubo un error. Por favor intenta de nuevo.");
-            })
-            .finally(() => {
-                btnEnviar.innerText = "Enviar Solicitud";
-                btnEnviar.classList.remove('loading');
-            });
-        })
-    </script>
+    <!-- FORM -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <script>
         AOS.init({
             duration: 1000, // Duración de la animación (1seg)
             once: true, // Animación de una sola vez
             offset: 200  // Comienzo de la animación 200px antes de llegar al elemento
         });
-    </script>
-    <!-- Menu Tres Barritas -->
-    <script>
+        
+        // Menú Móvil
         const menuToggle = document.getElementById('mobile-menu');
         const navList = document.getElementById('nav-list');
+        menuToggle.addEventListener('click', () => navList.classList.toggle('active'));
+        function closeMenu() {navList.classList.remove('active');}
 
-        menuToggle.addEventListener('click', function() {
-            navList.classList.toggle('active');
+        // Inicializar Teléfono (intl-tel-input
+        const phoneInput = document.querySelector("#phone");
+        const iti = window.intlTelInput(phoneInput, {
+            initialCountry: "auto",
+            geoIpLookup: function(success, failure){
+                fetch("https://ipapi.co/json").then(res => res.json()).then(data => success(data.country_code)).catch(() => success("ve"));
+            },
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });    
+    
+        // Formulario
+        const form = document.getElementById('form-contacto');
+        const toast = document.getElementById('toast');
+        const btn = document.getElementById('.btn-enviar');
+
+        form.addEventListener('submit', function(e){
+            e.preventDefault(); //Evita que la página se recargue
+            btn.innerText = "Enviando...";
+
+            const formData = new FormData(this);
+            // Capturar número internacional            
+            formData.set('Telefono', iti.getNumber());
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {'Accept': 'application/json'}
+            }).then(response => {
+                if (response.ok) {
+                    toast.classList.add('show');
+                    form.reset();
+                    setTimeout(() => toast.classList.remove('show'), 4000);
+                } else {
+                    alert("Error al enviar. Inténtalo de nuevo.");
+                }
+            }).catch(() => {
+                alert("Error de conexión.");
+            }).finally(() => {
+                btn.innerText = "Enviar Solicitud";
+            });
         });
-
-        // Cerrar automáticamente al hacer clic en una opción (anclas)
-        function closeMenu() {
-            navList.classList.remove('active');
-        }
-    </script>
+    </script>   
 
     <!-- FOOTER -->
     <footer>
@@ -558,6 +593,5 @@
         </div>
         <p style="font-size: 0.7rem; color: #999;">&copy; 2024 Reyfran Food & Drink. Todos los derechos reservados.</p>
     </footer>
-    </script>
 </body>
 </html>
