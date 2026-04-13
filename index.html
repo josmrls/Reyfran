@@ -454,10 +454,12 @@
                 <input type="hidden" name="_subject" value="Nueva cotización de Reyfran">
                 <input type="hidden" name="_next" value="https://josmrls.github.io/Reyfran/">
                 <input type="hidden" name="_captcha" value="false">
+                <!-- Campo trampa para bots (Invisible para humanos) -->
+                <input type="text" name="_honey" style="display:none">
 
                 <div class="form-group">
                     <label>Nombre y Apellido</label>
-                    <input type="text" name="Nombre" placeholder="Ej. Francisco Pérez" required>
+                    <input type="text" name="Nombre" maxlength="30" placeholder="Ej. Francisco Pérez" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -489,12 +491,12 @@
                 <div class="form-group-align">
                     <div class="form-group">
                         <label>Zona / Ubicación del Evento</label>
-                        <input type="text" name="Ubicacion" placeholder="Escribe el lugar o zona..." required>
+                        <input type="text" name="Ubicacion" maxlength="50" placeholder="Escribe el lugar o zona..." required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Detalles Adicionales</label>
-                    <textarea name="Mensaje" placeholder="Cuéntanos más detalles..."></textarea>
+                    <textarea name="Mensaje" maxlength="100" placeholder="Cuéntanos más detalles..."></textarea>
                 </div>
                 <button type="submit" id="btn-enviar" class="btn-submit">Enviar Solicitud</button>
             </form>
@@ -541,6 +543,11 @@
 
         form.addEventListener('submit', function(e){
             e.preventDefault(); //Evita que la página se recargue
+            // SEGURIDAD: Validación si el número de teléfono es válido
+            if (!iti.isValidNumber()){
+                alert("Por favor. ingresa un número de teléfono válido para tu región.");
+                return; // Detiene el envío
+            }
             btn.innerText = "Enviando...";
 
             const formData = new FormData(this);
