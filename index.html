@@ -109,7 +109,7 @@
         #inicio {
             height: 100vh;
             background: linear-gradient(rgba(0, 4, 94, 0.7), rgba(0, 4, 94, 0.5)), 
-                        url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+                        url('PORTAFOLIO_IMG/IMG_6582.JPEG');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -200,25 +200,21 @@
         }
 
         .form-container {
-            max-width: 700px;
+            max-width: 850px;
             margin: 0 auto;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .form-row-align {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            align-items: stretch;
+            gap: 25px;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: left;
+            display: flex;
+            flex-direction: column;
         }
 
         .form-group label {
@@ -236,15 +232,13 @@
             border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.08);
-            color: white;
+            color: gray;
             font-family: 'Monserrat', sans-serif;
             font-size: 0.95rem;
             outline: none;
             transition: 0.3s;
-            display: block;
         }
         .form-group textarea {
-            height: 100%;
             min-height: 120px;
             resize: none;
         }
@@ -254,16 +248,8 @@
             border-color: white;
         }
 
-        .form-row-final {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            align-items: stretch;
-            margin-bottom: 25px;
-        }
-        .form-row-final .form-group input, .form-row-final .form-group textarea {
+        .form-row-final .form-group input {
             flex-grow: 1;
-            min-height: 120px;
         }
 
         /* Detector de selector de países */
@@ -338,7 +324,7 @@
             /* Menú de hamburguesa */
             .menu-toggle {
                 display: block !important;
-                font-size: 2rem;
+                font-size: 1rem;
                 color: var(--azul-reyfran);
                 cursor: pointer;
                 z-index: 1001;
@@ -385,9 +371,8 @@
                 transition-delay: 0.2s;
             }
             /* Ajuste de Grids (Columnas a una sola fila) */
-            .grid-nosotros {grid-template-columns: 1fr;}
-            .form-row {grid-template-columns: 1fr;}
-            .form-row-align {grid-template-columns: 1fr;}
+            .grid-nosotros, .form-row, .form-row-final {grid-template-columns: 1fr;}
+            .form-row-final .form-group input {min-height: 50px;}
             .section-padding {padding: 60px 5%;}
         }
     </style>
@@ -489,16 +474,17 @@
                         <label>Tipo de Servicio</label>
                         <select name="Servicio" required>
                             <option value="" disabled selected>Selecciona una opción</option>
-                            <option value="Servicio Completo">Coctelería Completo (Barra, Bartender e Insumos)</option>
-                            <option value="Bartender e Insumos">Coctelería (Bartender e Insumos)</option>
-                            <option value="Barra y Bartender">Coctelería (Barra móvil y Bartender)</option>
-                            <option value="Barismo">Barismo (Barra móvil y Barista)</option>
-                            <option value="Milkshakes">Milkshakes (Fiesta Infantil)</option>
+                            <option value="Servicio Completo">Servicio de Coctelería Completo (Barra, Bartender e Insumos)</option>
+                            <option value="Bartender e Insumos">Servicio de Coctelería Intermedio (Bartender e Insumos)</option>
+                            <option value="Barra y Bartender">Servicio de Coctelería Básico (Barra móvil y Bartender)</option>
+                            <option value="Barismo">Servicio de Barismo (Barra móvil y Barista)</option>
+                            <option value="Milkshakes">Servicio de Milkshakes o Mócteles (Barra e Insumos)</option>
                         </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Cantidad de Personas</label>
-                    <input type="number" name="Invitados" placeholder="Ej. 50" required>
+                    <input type="number" name="Invitados" placeholder="Ej. 20" required>
                 </div>
                 <div class="form-group-align">
                     <div class="form-group">
@@ -551,7 +537,7 @@
         // Formulario
         const form = document.getElementById('form-contacto');
         const toast = document.getElementById('toast');
-        const btn = document.getElementById('.btn-enviar');
+        const btn = document.getElementById('btn-enviar');
 
         form.addEventListener('submit', function(e){
             e.preventDefault(); //Evita que la página se recargue
