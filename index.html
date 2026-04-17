@@ -450,7 +450,7 @@
             <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 10px;">Solicita tu Cotización</h2>
             <p style="text-align: center; margin-bottom: 40px; opacity: 0.8;">Déjanos tus datos y diseñaremos una propuesta exclusiva para tu evento.</p>
             
-            <form id="form-contacto" action="https://formsubmit.co/el/dujulu" method="post">
+            <form id="form-contacto" action="https://formsubmit.co/ajax/invreyfranpf@gmail.com" method="post">
                 <input type="hidden" name="_subject" value="Nueva cotización de Reyfran">
                 <input type="hidden" name="_next" value="https://josmrls.github.io/Reyfran/">
                 <input type="hidden" name="_captcha" value="false">
@@ -486,7 +486,7 @@
                 </div>
                 <div class="form-group">
                     <label>Cantidad de Personas</label>
-                    <input type="number" name="Invitados" placeholder="Ej. 20" required>
+                    <input type="number" name="Invitados" placeholder="Min. 20" min="20" required>
                 </div>
                 <div class="form-group-align">
                     <div class="form-group">
@@ -543,6 +543,12 @@
 
         form.addEventListener('submit', function(e){
             e.preventDefault(); //Evita que la página se recargue
+            // SEGURIDAD: Mínimo 20 Personas
+            const invitados = this.querySelector('input[name="Invitados"]').value;
+            if (invitados < 20) {
+                alert("Lo sentimos, el servicio de Reyfran requiere un mínimo de 20 invitados");
+                return;
+            }
             // SEGURIDAD: Validación si el número de teléfono es válido
             if (!iti.isValidNumber()){
                 alert("Por favor. ingresa un número de teléfono válido para tu región.");
@@ -572,6 +578,11 @@
                 btn.innerText = "Enviar Solicitud";
             });
         });
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.querySelector('input[name="Fecha"]');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+        });
     </script>   
 
     <!-- FOOTER -->
@@ -581,6 +592,8 @@
             <a href="https://www.instagram.com/invreyfranpf" target="_blank"><i class="fab fa-instagram"></i></a>
         </div>
         <div class="footer-info">
+            <p><a href="tel:+584126480255" style="color: inherit; text-decoration: none">
+                <i class="fas fa-phone"></i> +58 412-6480255</a></p>
             <p><i class="fas fa-envelope"></i> invreyfranpf@gmail.com</p>
             <p><i class="fas fa-map-marker-alt"></i> Punto Fijo | Edo. Falcón, Venezuela</p>
         </div>
