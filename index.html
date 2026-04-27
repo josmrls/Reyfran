@@ -58,25 +58,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 80px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo-container {
             display: flex;
             align-items: center;
+            text-decoration: none;
             max-width: 70%; /* Evita que choque con las barritas */
         }
 
         .logo-img {
             height: 90px; /* Ajusta el tamaño según prefieras */
             width: auto;
+            margin-right: 10px;
         }
 
         .brand-name {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: var(--azul-reyfran);
             letter-spacing: 1px;
+            white-space: nowrap; /* Evita que el nombre se separe en dos lineas */
         }
 
         nav ul {
@@ -85,7 +89,7 @@
         }
 
         nav ul li {
-            margin-left: 25px;
+            margin-left: 20px;
         }
 
         nav ul li a {
@@ -103,6 +107,9 @@
 
         .menu-toggle {
             display: none !important; /* Oculto en computadoras */
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--azul-reyfran);
         }
 
         /* --- SECCIÓN INICIO (HERO) --- */
@@ -329,6 +336,16 @@
                 cursor: pointer;
                 z-index: 1001;
             }
+            header {
+                padding: 0 5%;
+                height: 70px;
+            }
+            .brand-name {
+                font-size: 1.1rem;
+            }
+            .logo-img {
+                height: 50px;
+            }
             #inicio h1 {
                 font-size: 8.5rem;
             }
@@ -360,10 +377,10 @@
                 to {opacity: 1; transform: translateY(0);}
             }
             nav ul.active {
-                max-height: 350px;
+                max-height: 300px;
                 opacity: 1;
                 pointer-events: auto;
-                padding: 25px 0;
+                padding: 20px 0;
             }
             nav ul li {
                 margin: 15px 0;
@@ -389,7 +406,7 @@
     <header>
         <div class="logo-container">
             <img src="logo.png" alt="Reyfran Logo" class="logo-img">
-            <span class="brand-name">REYFRAN FOOD & DRINK</span>
+            <span class="brand-name">REYFRAN</span>
         </div>
         <!-- ICONO MENÚ PARA DISPOSITIVOS MÓVILES -->
         <div class="menu-toggle" id="mobile-menu">
