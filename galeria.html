@@ -175,9 +175,12 @@
                     
                     // Al hacer click, abre el lightbox
                     div.onclick = () => openLightbox(item.url, item.tipo);
+                    
+                    // Definir posición (si existe en Json)
+                    const estiloPosicion = item.posicion ? item.posicion : 'center';
 
                     div.innerHTML = `
-                        <img src="${item.miniatura}" alt="Multimedia" onerror="this.src='https://via.placeholder.com/400x300?text=Error+de+Carga'">
+                        <img src="${item.miniatura}" alt="Multimedia" style="object-position: ${estiloPosicion};" onerror="this.src='https://via.placeholder.com/400x300?text=Error+de+Carga'">
                         <div class="overlay">
                             <i class="fas ${item.tipo === 'img' ? 'fa-search-plus' : 'fa-play-circle'}" style="font-size: 2.5rem;"></i>
                         </div>
