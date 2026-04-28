@@ -382,6 +382,16 @@
                 transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1),
                             opacity 0.3s ease,
                             padding 0.4s ease;
+            }
+            input [type="date"] {
+            appearance: none;
+            -webkit-appearance: none;
+            display: flex;
+            align-items: center;
+            text-align: left !important;
+            }
+            input [type="date"]::-webkit-date-and-time-value {
+                text-align: left;
             }   
             @keyframes slideDown {
                 from {opacity: 0; transform: translateY(-10px);}
@@ -407,16 +417,6 @@
             /* Ajuste de Grids (Columnas a una sola fila) */
             .grid-nosotros, .form-row, .form-row-final {grid-template-columns: 1fr;}
             .form-row-final .form-group input {min-height: 50px;}
-            input [type="date"] {
-            appearance: none;
-            -webkit-appearance: none;
-            display: flex;
-            align-items: center;
-            text-align: left !important;
-            }
-            input [type="date"]::-webkit-date-and-time-value {
-                text-align: left;
-            }
             .section-padding {padding: 60px 5%;}
         }
     </style>
