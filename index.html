@@ -407,6 +407,16 @@
             /* Ajuste de Grids (Columnas a una sola fila) */
             .grid-nosotros, .form-row, .form-row-final {grid-template-columns: 1fr;}
             .form-row-final .form-group input {min-height: 50px;}
+            input [type="date"] {
+            appearance: none;
+            -webkit-appearance: none;
+            display: flex;
+            align-items: center;
+            text-align: left !important;
+            }
+            input [type="date"]::-webkit-date-and-time-value {
+                text-align: left;
+            }
             .section-padding {padding: 60px 5%;}
         }
     </style>
