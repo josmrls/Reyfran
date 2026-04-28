@@ -180,16 +180,28 @@
             const grid = document.getElementById('portafolio-grid');
             try {
                 // Fetch del archivo JSON
-                const respuesta = await fetch('multimedia.json');
+                const respuesta = await fetch('multimedia.json?v=' + Date.now()); //Evita el caché
                 if (!respuesta.ok) throw new Error("Error al cargar JSON");
                 
                 const datos = await respuesta.json();
+                grid.innerHTML = '';
 
                 datos.forEach((item, index) => {
                     const div = document.createElement('div');
                     div.className = 'portafolio-item';
                     div.setAttribute('data-aos', 'fade-up');
                     div.setAttribute('data-aos-delay', (index % 3) * 100);
+
+                    const imgHtml = `
+                        <img src="${item.miniatura}"
+                            alt="Reyfran"
+                            style="object-position: ${item.posicion || 'center'};"
+                            onerror="console.error('No se encontró: ${item.miniatura}')]; this.parentElement.style.border='2px solid red';">
+                            <div class="overlay"> 
+                                <i class="fas ${item.tipo === 'img' ? 'fa-search-plus':'fa-play-circle'}" style="font-size: 2.5rem;"></i>
+                            </div>
+                        `;
+                    div.innerHTML = imgHtml;
                     
                     // Al hacer click, abre el lightbox
                     div.onclick = () => openLightbox(item.url, item.tipo);
@@ -197,12 +209,6 @@
                     // Definir posición (si existe en Json)
                     const estiloPosicion = item.posicion ? item.posicion : 'center';
 
-                    div.innerHTML = `
-                        <img src="${item.miniatura}" alt="Multimedia" style="object-position: ${estiloPosicion};" onerror="this.src='https://via.placeholder.com/400x300?text=Error+de+Carga'">
-                        <div class="overlay">
-                            <i class="fas ${item.tipo === 'img' ? 'fa-search-plus' : 'fa-play-circle'}" style="font-size: 2.5rem;"></i>
-                        </div>
-                    `;
                     grid.appendChild(div);
                 });
 
