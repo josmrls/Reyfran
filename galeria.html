@@ -72,10 +72,11 @@
         .footer-info { margin: 20px 0; font-size: 0.9rem; color: #555; }
 
         @media (max-width: 768px) {
-            .menu-toggle { display: block; }
-            header {height: 70px;}
+            .menu-toggle { display: block !important; margin-left: auto; padding: 10px 5px 10px 15px; font-size: 1.5rem; z-index: 1001;}
+            header {height: 70px; justify-content: space-between; padding: 0 4%;}
             .logo-img {height: 45px;}
-            .brand-name {font-size: 1.1rem;}
+            .logo-container {flex: 1; justify-content: flex-start;}
+            .brand-name {font-size: 1.1rem; max-width: 150px; overflow: hidden; text-overflow: ellipsis;}
             nav ul {
                 display: flex; flex-direction: column; position: absolute;
                 top: 70px; left: 0; width: 100%; background: white;

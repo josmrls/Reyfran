@@ -332,17 +332,27 @@
             /* Menú de hamburguesa */
             .menu-toggle {
                 display: block !important;
-                font-size: 1.2rem;
+                font-size: 1.5rem;
                 color: var(--azul-reyfran);
                 cursor: pointer;
                 z-index: 1001;
+                margin-left: auto;
+                padding: 10px 5px 10px 15px;
             }
             header {
-                padding: 0px 5%;
+                padding: 0px 4%;
                 height: 70px;
+                justify-content: space-between;
+            }
+            .logo-container{
+                flex: 1;
+                justify-content: flex-start;
             }
             .brand-name {
                 font-size: 1.1rem;
+                max-width: 150px;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .logo-img {
                 height: 50px;
