@@ -16,17 +16,17 @@
         body {font-family: 'Montserrat', sans-serif; background-color: var(--gris); color: var(--azul); display: flex; flex-direction: column;}
 
         /* HEADER */
-        header { background: var(--blanco); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);}
+        header { background: var(--blanco); padding: 0 5%; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; height: 80px;}
         .logo-container { display: flex; align-items: center; text-decoration: none; color: var(--azul);}
-        .logo-img { height: 70px; margin-right: 10px;}
-        .brand-name { font-weight: bold; font-size: 1.2rem; letter-spacing: 1px;}
-        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+        .logo-img { height: 75px; margin-right: 10px; width: auto;}
+        .brand-name { font-weight: bold; font-size: 1.3rem; letter-spacing: 1px; white-space: nowrap; color: var(--azul);}
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--azul);}
         nav ul { display: flex; list-style: none;}
         nav ul li { margin-left: 20px;}
         nav ul li a { text-decoration: none; color: var(--azul); font-weight: bold; font-size: 0.8rem; text-transform: uppercase;}
         
         /* PORTAFOLIO HEADER */
-        .portafolio-header { padding: 60px 10%; text-align: center; background: var(--azul); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .portafolio-header { padding: 60px 10%; text-align: center; background: var(--azul); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 80px; }
         .portafolio-header h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; }
 
         /* GRID PORTAFOLIO */
@@ -73,14 +73,18 @@
 
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
+            header {height: 70px;}
+            .logo-img {height: 45px;}
+            .brand-name {font-size: 1.1rem;}
             nav ul {
                 display: flex; flex-direction: column; position: absolute;
                 top: 70px; left: 0; width: 100%; background: white;
                 max-height: 0; overflow: hidden; opacity: 0;
                 transition: all 0.5s ease; text-align: center; z-index: 1001;
             }
-            nav ul.active { max-height: 400px; opacity: 1; padding: 20px 0; }
+            nav ul.active { max-height: 350px; opacity: 1; padding: 20px 0; }
             nav ul li { margin: 15px 0; margin-left: 0; }
+            .portafolio-header {margin-top: 70px;}
             #portafolio-grid { grid-template-columns: 1fr; padding: 20px 5%; }
         }
     </style>
@@ -89,7 +93,7 @@
     <header>
         <a href="index.html" class="logo-container">
             <img src="logo.png" alt="Reyfran Logo" class="logo-img">
-            <span class="brand-name"> REYFRAN FOOD & DRINK</span>
+            <span class="brand-name">REYFRAN</span>
         </a>
         <div class="menu-toggle" id="mobile-menu">
             <i class="fas fa-bars"></i>
@@ -208,6 +212,12 @@
                 menuToggle.addEventListener('click', () => {
                     navList.classList.toggle('active');
                 });
+            }
+            // Cerrar Menu al hacer clic en un enlace
+            function closeMenu() {
+                if (window.innerWidth <= 768) {
+                    navList.classList.remove('active');
+                }
             }
         });
 
